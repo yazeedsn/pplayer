@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pplayer/api_handler.dart';
 import 'package:pplayer/components/bottom_bar_icon.dart';
 import 'package:pplayer/pages/home_page.dart';
 
@@ -19,6 +20,11 @@ var _pages = <Widget>[
 ];
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

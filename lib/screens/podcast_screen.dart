@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pplayer/api_handler.dart';
+import 'package:pplayer/components/path_slider.dart';
 import 'package:pplayer/components/play_button.dart';
+import 'package:pplayer/models/player_model.dart';
+import 'package:provider/provider.dart';
 
 class PodcastScreen extends StatelessWidget {
   const PodcastScreen({Key? key}) : super(key: key);
+
+  final url = 'https://samplelib.com/lib/preview/mp3/sample-9s.mp3';
 
   @override
   Widget build(BuildContext context) {
@@ -111,64 +117,89 @@ class PodcastScreen extends StatelessWidget {
               SizedBox(height: 16.h),
               Align(
                 alignment: Alignment.center,
-                child: Column(
-                  children: [
-                    Text(
-                      'The Jordan Harbinger show',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22.sp,
+                child: ChangeNotifierProvider<PlayerModel>(
+                  create: (context) => PlayerModel(url: url),
+                  child: Column(
+                    children: [
+                      Text(
+                        'The Jordan Harbinger show',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22.sp,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 8.h),
-                    Text(
-                      'Celeste Headlee',
-                      style: TextStyle(
-                        color: const Color(0xFF7B7B8B),
-                        fontSize: 11.sp,
+                      SizedBox(height: 8.h),
+                      Text(
+                        'Celeste Headlee',
+                        style: TextStyle(
+                          color: const Color(0xFF7B7B8B),
+                          fontSize: 11.sp,
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 20.w, vertical: 20.h),
-                      child: Row(
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 20.w, vertical: 20.h),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Text(
+                              '41.08',
+                              style: TextStyle(
+                                color: const Color(0xFF7B7B8B),
+                                fontSize: 9.sp,
+                              ),
+                            ),
+                            SizedBox(width: 16.w),
+                            Expanded(
+                              child: Consumer<PlayerModel>(
+                                  builder: (buildContext, model, child) {
+                                return PathSlider(position: model.position);
+                              }),
+                            ),
+                            IconButton(
+                              onPressed: null,
+                              icon: Icon(
+                                Icons.favorite,
+                                color: const Color(0xFF7B7B8B),
+                                size: 18.r,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Text(
-                            '41.08',
-                            style: TextStyle(
-                              color: const Color(0xFF7B7B8B),
-                              fontSize: 9.sp,
+                          IconButton(
+                            onPressed: null,
+                            icon: Icon(
+                              Icons.skip_previous_outlined,
+                              color: Colors.white,
+                              size: 60.r,
+                            ),
+                          ),
+                          SizedBox(width: 18.w),
+                          Consumer<PlayerModel>(
+                            builder: (context, model, child) => PlayButton(
+                              isPlaying: model.isPlaying,
+                              onPressed: () => (model.isPlaying)
+                                  ? model.pause()
+                                  : model.play(),
                             ),
                           ),
                           IconButton(
                             onPressed: null,
                             icon: Icon(
-                              Icons.favorite,
-                              color: const Color(0xFF7B7B8B),
-                              size: 18.r,
+                              Icons.skip_next_outlined,
+                              color: Colors.white,
+                              size: 60.r,
                             ),
                           ),
                         ],
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        IconButton(
-                          onPressed: null,
-                          icon: Icon(
-                            Icons.skip_previous_outlined,
-                            color: Colors.white,
-                            size: 60.r,
-                          ),
-                        ),
-                        SizedBox(width: 18.w),
-                        const PlayButton(isPlaying: false),
-                      ],
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ],
