@@ -1,15 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pplayer/api_handler.dart';
 import 'package:pplayer/components/path_slider.dart';
 import 'package:pplayer/components/play_button.dart';
 import 'package:pplayer/models/player_model.dart';
+import 'package:pplayer/models/podcast.dart';
 import 'package:provider/provider.dart';
 
 class PodcastScreen extends StatelessWidget {
-  const PodcastScreen({Key? key}) : super(key: key);
+  const PodcastScreen({Key? key, required this.podcast}) : super(key: key);
 
   final url = 'https://samplelib.com/lib/preview/mp3/sample-9s.mp3';
+  final Podcast podcast;
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +38,9 @@ class PodcastScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  child: Image.asset(
-                    'assets/images/podcast_bg.png',
-                    fit: BoxFit.fitWidth,
+                  child: Image(
+                    image: CachedNetworkImageProvider(podcast.image ??
+                        'https://www.svgrepo.com/show/52131/loading.svg'),
                   ),
                 ),
               ),
@@ -122,7 +124,7 @@ class PodcastScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        'The Jordan Harbinger show',
+                        podcast.title ?? '',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 22.sp,
@@ -130,7 +132,7 @@ class PodcastScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 8.h),
                       Text(
-                        'Celeste Headlee',
+                        podcast.title ?? '',
                         style: TextStyle(
                           color: const Color(0xFF7B7B8B),
                           fontSize: 11.sp,

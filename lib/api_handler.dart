@@ -5,23 +5,34 @@ import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:pplayer/models/podcast.dart';
+
 class ApiHandler {
   final _apiUrl = 'https://api.podcastindex.org/api/1.0/';
   final _apiKey = '36GMP74RAES9DADSXU4C';
   final _apiSecret = 'UVhbFC^euchFa\$GxSmgdGNJr3Leu36YvbLZfwn8D';
 
-  Future<Podcast> getTrendingPodcasts({int max = 10}) async {
+  Future<List<Podcast>> getTrendingPodcasts({int max = 10}) async {
     String url = '$_apiUrl/podcasts/trending?$max';
-    var podcast = await _fetchJson(url);
-    return podcast;
+    var data = await _fetchJson(url);
+    int count = data['count'];
+    if (max < count) {
+      count = max;
+    }
+    var feeds = data['feeds'];
+    var podcasts = <Podcast>[];
+    for (int i = 0; i < count; i++) {
+      podcasts.add(Podcast.fromJson(feeds[i]));
+    }
+    return podcasts;
   }
 
-  Future<Podcast> _fetchJson(String url) async {
+  Future<dynamic> _fetchJson(String url) async {
     final headers = _encodeHeaders();
     final response = await http.get(Uri.parse(url), headers: headers);
 
     if (response.statusCode == 200) {
-      return Podcast.fromJson(json.decode(response.body));
+      return json.decode(response.body);
     } else {
       throw ('Failed to fetch a vaild response.');
     }
@@ -53,27 +64,5 @@ class ApiHandler {
     };
 
     return headers;
-  }
-}
-
-class Podcast {
-  final String? title;
-  final String? author;
-  final String? image;
-
-  Podcast({
-    this.title,
-    this.author,
-    this.image,
-  });
-
-  factory Podcast.fromJson(Map<String, dynamic> json) {
-    var data = json['feeds'][0];
-
-    return Podcast(
-      title: data['title'],
-      author: data['author'],
-      image: data['image'],
-    );
   }
 }
