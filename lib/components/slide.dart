@@ -13,59 +13,29 @@ class Slide extends StatelessWidget {
   final String author;
   final String? imageUrl;
 
+  final waitingImageUrl =
+      'https://t3.ftcdn.net/jpg/02/46/67/70/360_F_246677065_FY7a89FprqE1iKgPpEVSKDVOWMBTS2MX.jpg';
+
   @override
   Widget build(BuildContext context) {
+    final networkImage = Image.network(
+      imageUrl ?? waitingImageUrl,
+      fit: BoxFit.fitWidth,
+      errorBuilder: (context, widget, event) => const Center(
+          child: Text(
+        'Could not load this image.',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 28,
+        ),
+      )),
+    );
+
     return Stack(children: [
       SizedBox(
         height: 375.h,
         width: 375.w,
-        child: (imageUrl != null)
-            ? Image.network(
-                imageUrl ?? '',
-                fit: BoxFit.fitWidth,
-                alignment: Alignment.topCenter,
-              )
-            : Image.asset(
-                'assets/images/slider.png',
-                fit: BoxFit.cover,
-              ),
-      ),
-      Column(
-        children: [
-          SizedBox(height: 105.h),
-          Container(
-            padding: const EdgeInsets.all(6),
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.5),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  author,
-                  style: TextStyle(
-                    color: Colors.white,
-                    //color: const Color(0xFF7B7B8B),
-                    fontSize: 11.sp,
-                    fontFamily: 'CircularStd',
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Text(
-                  title,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 28.sp,
-                    fontFamily: 'CircularStd',
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+        child: (networkImage),
       ),
     ]);
   }

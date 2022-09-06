@@ -30,12 +30,20 @@ class HomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 238.h),
-              Text(
-                'Popular Broadcast',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.bold,
+              Container(
+                padding:
+                    const EdgeInsets.only(top: 2, bottom: 4, right: 8, left: 4),
+                decoration: const BoxDecoration(
+                  color: Color(0xFF13131A),
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                ),
+                child: Text(
+                  'Popular Broadcast',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               SizedBox(height: 16.h),
@@ -70,6 +78,7 @@ class HomePage extends StatelessWidget {
               Expanded(
                 child: ListView.separated(
                   shrinkWrap: true,
+                  clipBehavior: Clip.antiAlias,
                   itemCount: 4,
                   itemBuilder: (buildContext, index) => const PodcastListTile(),
                   separatorBuilder: (buildContext, index) =>

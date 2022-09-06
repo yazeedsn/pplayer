@@ -11,7 +11,8 @@ class PodcastCard extends StatelessWidget {
   }) : super(key: key);
 
   final Podcast podcast;
-
+  final waitingImageUrl =
+      'https://t3.ftcdn.net/jpg/02/46/67/70/360_F_246677065_FY7a89FprqE1iKgPpEVSKDVOWMBTS2MX.jpg';
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -38,10 +39,8 @@ class PodcastCard extends StatelessWidget {
                       offset: Offset(0.w, 4.h),
                     )
                   ]),
-              child: Image(
-                image: CachedNetworkImageProvider(podcast.image ??
-                    'https://www.svgrepo.com/show/52131/loading.svg'),
-              ),
+              // TO Do: Replace with the podcast image and handle any occuring errors
+              child: CachedNetworkImage(imageUrl: podcast.image ?? ''),
             ),
             SizedBox(height: 10.h),
             Padding(

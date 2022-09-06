@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pplayer/screens/home_screen.dart';
-import 'package:pplayer/screens/login_screen.dart';
-import 'package:pplayer/screens/podcast_screen.dart';
-import 'package:pplayer/screens/signin_screen.dart';
-import 'package:pplayer/screens/welcome_screen.dart';
 
 void main() {
   runApp(const MyApp());
