@@ -1,8 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pplayer/components/scaffold_with_bottom_bar.dart';
+import 'package:pplayer/components/network_image_loader.dart';
 import 'package:pplayer/models/podcast.dart';
+import 'package:pplayer/screens/podcast_screen.dart';
 
 class PodcastCard extends StatelessWidget {
   const PodcastCard({
@@ -11,8 +11,7 @@ class PodcastCard extends StatelessWidget {
   }) : super(key: key);
 
   final Podcast podcast;
-  final waitingImageUrl =
-      'https://t3.ftcdn.net/jpg/02/46/67/70/360_F_246677065_FY7a89FprqE1iKgPpEVSKDVOWMBTS2MX.jpg';
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -40,7 +39,10 @@ class PodcastCard extends StatelessWidget {
                     )
                   ]),
               // TO Do: Replace with the podcast image and handle any occuring errors
-              child: CachedNetworkImage(imageUrl: podcast.image ?? ''),
+              child: NetworkImageLoader(
+                podcast.image,
+                errorWidget: const Text('Error'),
+              ),
             ),
             SizedBox(height: 10.h),
             Padding(
@@ -49,7 +51,7 @@ class PodcastCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    podcast.title ?? '',
+                    podcast.title,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         color: Colors.white,
@@ -57,7 +59,7 @@ class PodcastCard extends StatelessWidget {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    podcast.author ?? '',
+                    podcast.author,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         color: const Color(0xFF5C5E6F),
@@ -68,75 +70,6 @@ class PodcastCard extends StatelessWidget {
               ),
             )
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class PodcastScreen extends StatelessWidget {
-  const PodcastScreen({Key? key, required this.podcast}) : super(key: key);
-
-  final Podcast podcast;
-
-  @override
-  Widget build(BuildContext context) {
-    return ScaffoldWithBottomBar(
-      selected: 0,
-      body: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-        child: SafeArea(
-          child: Column(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 124.w,
-                    height: 124.h,
-                    color: Colors.white,
-                    foregroundDecoration: BoxDecoration(
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(podcast.image ?? ''))),
-                  ),
-                  SizedBox(width: 12.w),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 4.h),
-                      Text(
-                        podcast.title ?? 'I Survived',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 8.h),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width - 178.w,
-                        height: 124.h - 28.h,
-                        child: SingleChildScrollView(
-                          child: Text(
-                            podcast.description ??
-                                'What is it like to face death and make it out alive? Based on the groundbreaking A&E television series, I Survived documents harrowing stories of human endurance. In their own words, survivors recall how they overcame unbelievable circumstances that changed their lives forever.',
-                            overflow: TextOverflow.fade,
-                            maxLines: 20,
-                            style: const TextStyle(
-                              color: Color(0xFF5C5E6F),
-                              fontSize: 10,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              )
-            ],
-          ),
         ),
       ),
     );

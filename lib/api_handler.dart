@@ -8,6 +8,9 @@ import 'package:pplayer/models/eposide.dart';
 import 'package:pplayer/models/podcast.dart';
 
 class ApiHandler {
+  ApiHandler._();
+  static final instance = ApiHandler._();
+
   final _apiUrl = 'https://api.podcastindex.org/api/1.0';
   final _apiKey = '36GMP74RAES9DADSXU4C';
   final _apiSecret = 'UVhbFC^euchFa\$GxSmgdGNJr3Leu36YvbLZfwn8D';
@@ -65,10 +68,29 @@ class ApiHandler {
     var items = data['items'];
     var eposide = items[0];
     return Eposide(
+      id: eposide['title'],
       title: eposide['title'],
       enclosuerUrl: eposide['enclosureUrl'],
       image: eposide['image'],
     );
+  }
+
+  Future<List<Eposide>> getEposides(int podcastId) async {
+    String url = '$_apiUrl/episodes/byfeedid?id=$podcastId&max=10&pretty';
+    var data = await _fetchJson(url);
+    var items = data['items'];
+    var count = data['count'];
+    var eposides = <Eposide>[];
+    for (int i = 0; i < count; i++) {
+      eposides.add(Eposide(
+        id: items[i]['id'],
+        title: items[i]['title'],
+        enclosuerUrl: items[i]['enclosureUrl'],
+        image: items[i]['image'],
+      ));
+    }
+
+    return eposides;
   }
 
   Future<dynamic> _fetchJson(String url) async {

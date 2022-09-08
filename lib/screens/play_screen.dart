@@ -1,7 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pplayer/api_handler.dart';
+import 'package:pplayer/components/network_image_loader.dart';
 import 'package:pplayer/components/path_slider.dart';
 import 'package:pplayer/components/play_button.dart';
 import 'package:pplayer/models/eposide.dart';
@@ -16,12 +16,7 @@ class PodcastScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final image = Image(
-      fit: BoxFit.cover,
-      image: CachedNetworkImageProvider(
-          podcast.image ?? 'https://www.svgrepo.com/show/52131/loading.svg'),
-    );
-
+    var podcastImage = NetworkImageLoader(podcast.image);
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
@@ -45,7 +40,7 @@ class PodcastScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  child: image,
+                  child: podcastImage,
                 ),
               ),
               Expanded(
@@ -113,7 +108,7 @@ class PodcastScreen extends StatelessWidget {
                               )
                             ],
                           ),
-                          child: image),
+                          child: podcastImage),
                       const Expanded(child: SizedBox(width: 1)),
                     ],
                   ),
@@ -123,7 +118,7 @@ class PodcastScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: FutureBuilder<Eposide>(
-                    future: ApiHandler().getEposide(podcast.id ?? 75075),
+                    future: ApiHandler.instance.getEposide(podcast.id),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState != ConnectionState.done) {
                         return const CircularProgressIndicator(
@@ -140,7 +135,7 @@ class PodcastScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             Text(
-                              podcast.title ?? '',
+                              podcast.title,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 22.sp,
@@ -148,7 +143,7 @@ class PodcastScreen extends StatelessWidget {
                             ),
                             SizedBox(height: 8.h),
                             Text(
-                              podcast.title ?? '',
+                              podcast.title,
                               style: TextStyle(
                                 color: const Color(0xFF7B7B8B),
                                 fontSize: 11.sp,

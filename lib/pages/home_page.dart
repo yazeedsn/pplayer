@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pplayer/api_handler.dart';
 import 'package:pplayer/models/podcast.dart';
 import 'package:pplayer/components/podcast_card.dart';
-import 'package:pplayer/components/podcast_list_tile.dart';
 import 'package:pplayer/components/slide_view.dart';
 
 class HomePage extends StatelessWidget {
@@ -18,7 +17,7 @@ class HomePage extends StatelessWidget {
     return Stack(
       children: [
         FutureBuilder<List<Podcast>>(
-            future: ApiHandler().getTrendingPodcasts(max: 4),
+            future: ApiHandler.instance.getTrendingPodcasts(max: 4),
             builder: (context, snapshot) => SlideView(
                 podcasts: snapshot.data ?? [],
                 slidesCount:
@@ -48,7 +47,7 @@ class HomePage extends StatelessWidget {
               ),
               SizedBox(height: 16.h),
               FutureBuilder<List<Podcast>>(
-                  future: ApiHandler().getTrendingPodcasts(max: 10),
+                  future: ApiHandler.instance.getTrendingPodcasts(max: 10),
                   builder: (context, snapshot) {
                     var podcasts = snapshot.data ?? [];
                     var count = podcasts.length;

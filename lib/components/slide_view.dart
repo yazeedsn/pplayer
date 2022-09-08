@@ -25,8 +25,8 @@ class SlideView extends StatelessWidget {
         scrollDirection: Axis.vertical,
         itemCount: slidesCount,
         itemBuilder: (context, index) => Slide(
-          title: podcasts[index].title ?? '',
-          author: podcasts[index].author ?? '',
+          title: podcasts[index].title,
+          author: podcasts[index].author,
           imageUrl: podcasts[index].image,
         ),
       ),

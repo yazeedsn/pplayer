@@ -4,7 +4,7 @@ import 'package:pplayer/components/bottom_bar_icon.dart';
 
 import 'package:pplayer/pages/home_page.dart';
 import 'package:pplayer/pages/profile_page.dart';
-import 'package:pplayer/pages/statations_page.dart';
+import 'package:pplayer/pages/genera_page.dart';
 
 class ScaffoldWithBottomBar extends StatefulWidget {
   const ScaffoldWithBottomBar(
@@ -29,7 +29,7 @@ class _ScaffoldWithBottomBarState extends State<ScaffoldWithBottomBar> {
 
   var pages = <Widget>[
     HomePage(),
-    const StationsPage(),
+    const GeneraPage(),
     Container(),
     Container(),
     const ProfilePage(),

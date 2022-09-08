@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pplayer/components/bottom_bar_icon.dart';
 import 'package:pplayer/pages/home_page.dart';
 import 'package:pplayer/pages/profile_page.dart';
-import 'package:pplayer/pages/statations_page.dart';
+import 'package:pplayer/pages/genera_page.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 int _index = 0;
 var _pages = <Widget>[
   HomePage(),
-  const StationsPage(),
+  const GeneraPage(),
   Container(),
   Container(),
   const ProfilePage(),
