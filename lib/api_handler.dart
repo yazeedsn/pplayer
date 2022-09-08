@@ -5,7 +5,6 @@ import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 import 'package:pplayer/models/eposide.dart';
-
 import 'package:pplayer/models/podcast.dart';
 
 class ApiHandler {
@@ -26,8 +25,11 @@ class ApiHandler {
     return cats;
   }
 
-  Future<List<Podcast>> getTrendingPodcasts({int max = 10}) async {
+  Future<List<Podcast>> getTrendingPodcasts({int max = 10, String? cat}) async {
     String url = '$_apiUrl/podcasts/trending?max=$max';
+    if (cat != null) {
+      url = '$url&cat=$cat';
+    }
     var data = await _fetchJson(url);
     int count = data['count'];
     if (max < count) {

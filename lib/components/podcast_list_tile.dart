@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pplayer/models/podcast.dart';
 
 class PodcastListTile extends StatelessWidget {
   const PodcastListTile({
     Key? key,
+    required this.podcast,
   }) : super(key: key);
+
+  final Podcast podcast;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,7 @@ class PodcastListTile extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 6),
-            child: Image.asset('assets/images/pd2.png'),
+            child: Image.network(podcast.image ?? ''),
           ),
           SizedBox(width: 12.w),
           Column(
@@ -28,14 +32,14 @@ class PodcastListTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Expeditiously with tip "T.I." Harris',
+                podcast.title ?? '',
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 10.sp,
                     fontWeight: FontWeight.bold),
               ),
               Text(
-                'Greenwood Online Banking For Us By Us',
+                podcast.author ?? '',
                 style: TextStyle(
                     color: const Color(0xFF5C5E6F),
                     fontSize: 10.sp,

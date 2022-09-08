@@ -75,16 +75,6 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 16.h),
-              Expanded(
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  clipBehavior: Clip.antiAlias,
-                  itemCount: 4,
-                  itemBuilder: (buildContext, index) => const PodcastListTile(),
-                  separatorBuilder: (buildContext, index) =>
-                      SizedBox(height: 9.h),
-                ),
-              ),
             ],
           ),
         )

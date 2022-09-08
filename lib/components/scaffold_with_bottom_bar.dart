@@ -1,30 +1,39 @@
 import 'package:flutter/material.dart';
+
 import 'package:pplayer/components/bottom_bar_icon.dart';
+
 import 'package:pplayer/pages/home_page.dart';
 import 'package:pplayer/pages/profile_page.dart';
 import 'package:pplayer/pages/statations_page.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class ScaffoldWithBottomBar extends StatefulWidget {
+  const ScaffoldWithBottomBar(
+      {Key? key, required this.selected, required this.body})
+      : super(key: key);
+
+  final int selected;
+  final Widget body;
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<ScaffoldWithBottomBar> createState() => _ScaffoldWithBottomBarState();
 }
 
-int _index = 0;
-var _pages = <Widget>[
-  HomePage(),
-  const StationsPage(),
-  Container(),
-  Container(),
-  const ProfilePage(),
-];
+class _ScaffoldWithBottomBarState extends State<ScaffoldWithBottomBar> {
+  late int _index;
 
-class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _index = 0;
   }
+
+  var pages = <Widget>[
+    HomePage(),
+    const StationsPage(),
+    Container(),
+    Container(),
+    const ProfilePage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: _pages[_index],
+      body: widget.body,
     );
   }
 }
