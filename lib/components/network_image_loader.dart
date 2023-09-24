@@ -14,18 +14,22 @@ class NetworkImageLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(
-      url,
-      fit: BoxFit.cover,
-      loadingBuilder: (context, child, loadingProgress) =>
-          (loadingProgress == null)
-              ? child
-              : (loadingWidget ??
-                  const CircularProgressIndicator(
-                    color: Colors.white,
-                  )),
-      errorBuilder: (context, exception, stackTrace) =>
-          errorWidget ?? const Text('error widget...'),
-    );
+    try {
+      return Image.network(
+        url,
+        fit: BoxFit.cover,
+        loadingBuilder: (context, child, loadingProgress) =>
+            (loadingProgress == null)
+                ? child
+                : (loadingWidget ??
+                    const CircularProgressIndicator(
+                      color: Colors.white,
+                    )),
+        errorBuilder: (context, exception, stackTrace) =>
+            errorWidget ?? const Text('Error'),
+      );
+    } catch (e) {
+      return const Text('Error');
+    }
   }
 }

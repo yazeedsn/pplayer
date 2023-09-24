@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pplayer/components/bottom_bar_icon.dart';
 import 'package:pplayer/pages/home_page.dart';
-import 'package:pplayer/pages/profile_page.dart';
 import 'package:pplayer/pages/genera_page.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,7 +16,6 @@ var _pages = <Widget>[
   const GeneraPage(),
   Container(),
   Container(),
-  const ProfilePage(),
 ];
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -47,10 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: BottomBarIcon(Icons.podcasts),
             label: 'Podcasts',
-          ),
-          BottomNavigationBarItem(
-            icon: BottomBarIcon(Icons.event),
-            label: 'Events',
           ),
           BottomNavigationBarItem(
             icon: BottomBarIcon(Icons.person),

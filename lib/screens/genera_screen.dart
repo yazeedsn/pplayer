@@ -4,6 +4,7 @@ import 'package:pplayer/components/podcast_list_tile.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pplayer/models/podcast.dart';
 import 'package:pplayer/api_handler.dart';
+import 'package:pplayer/screens/podcast_screen.dart';
 
 class GeneraScreen extends StatelessWidget {
   const GeneraScreen({
@@ -49,7 +50,15 @@ class GeneraScreen extends StatelessWidget {
                         shrinkWrap: true,
                         itemCount: (podcasts != null) ? podcasts.length : 0,
                         itemBuilder: (buildContext, index) =>
-                            PodcastListTile.fromPodcast(podcasts![index]),
+                            PodcastListTile.fromPodcast(
+                          podcasts![index],
+                          onPressed: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) =>
+                                  PodcastScreen(podcast: podcasts[index]),
+                            ),
+                          ),
+                        ),
                         separatorBuilder: (buildContext, index) =>
                             SizedBox(height: 9.h),
                       );

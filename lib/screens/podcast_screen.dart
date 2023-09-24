@@ -5,6 +5,7 @@ import 'package:pplayer/components/scaffold_with_bottom_bar.dart';
 import 'package:pplayer/models/eposide.dart';
 import 'package:pplayer/models/podcast.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pplayer/screens/play_screen.dart';
 
 class PodcastScreen extends StatelessWidget {
   const PodcastScreen({Key? key, required this.podcast}) : super(key: key);
@@ -37,12 +38,15 @@ class PodcastScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 4.h),
-                      Text(
-                        podcast.title,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width - 178.w,
+                        child: Text(
+                          podcast.title,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       SizedBox(height: 8.h),
@@ -85,7 +89,14 @@ class PodcastScreen extends StatelessWidget {
                           clipBehavior: Clip.none,
                           itemCount: (eposides != null) ? eposides.length : 0,
                           itemBuilder: (buildContext, index) =>
-                              PodcastListTile.fromEposide(eposides![index]),
+                              PodcastListTile.fromEposide(
+                            eposides![index],
+                            onPressed: () =>
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (_) => PlayScreen(
+                                          eposide: eposides[index],
+                                        ))),
+                          ),
                           separatorBuilder: (buildContext, index) =>
                               SizedBox(height: 9.h),
                         );
